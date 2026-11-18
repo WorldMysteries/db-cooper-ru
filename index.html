@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дело Д. Б. Купера — единственный нераскрытый угон самолёта в истории США</title>
+<meta name="description" content="Досье NORJAK: хронология, улики, подозреваемые и теории дела Д. Б. Купера — человека, который в 1971 году выпрыгнул из Boeing 727 с 200 000 долларов и исчез навсегда.">
+<style>
+  :root{
+    --bg:#0c0b09;
+    --bg2:#14120e;
+    --paper:#e9e1cf;
+    --paper2:#d9cfb8;
+    --ink:#1c1813;
+    --amber:#d9a441;
+    --amber2:#b8862b;
+    --red:#a8342a;
+    --muted:#8d8273;
+    --line:#2b2721;
+    --serif:Georgia,"Times New Roman",serif;
+    --mono:"Courier New",Courier,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--paper);font-family:var(--serif);line-height:1.6;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:var(--amber);text-decoration:none}
+  h1,h2,h3,h4{font-weight:400;line-height:1.15}
+  .container{width:min(1140px,92%);margin:0 auto}
+  .mono{font-family:var(--mono)}
+  .accent{color:var(--amber)}
+
+  /* film grain overlay */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.07;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== NAV ===== */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,11,9,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transition:transform .3s}
+  nav .container{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-family:var(--mono);letter-spacing:.18em;font-size:.8rem;color:var(--paper);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  .brand b{color:var(--amber)}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .nav-links{display:flex;gap:26px;list-style:none}
+  .nav-links a{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--amber)}
+  .burger{display:none;background:none;border:1px solid var(--line);color:var(--paper);width:40px;height:40px;cursor:pointer;font-size:1.1rem}
+  .progress{position:absolute;bottom:-1px;left:0;height:2px;background:var(--amber);width:0}
+
+  /* ===== HERO ===== */
+  .hero{min-height:100vh;position:relative;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:url("https://images.pexels.com/photos/9791113/pexels-photo-9791113.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200") center/cover no-repeat;filter:grayscale(.6) brightness(.45) contrast(1.1);transform:scale(1.05)}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,9,.3) 0%,rgba(12,11,9,.55) 50%,var(--bg) 100%)}
+  .hero .container{position:relative;z-index:1;display:grid;grid-template-columns:1.3fr .9fr;gap:60px;align-items:center}
+  .stamp{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;border:2px solid var(--red);color:var(--red);padding:6px 12px;transform:rotate(-3deg);margin-bottom:26px;opacity:.9}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.6rem);letter-spacing:-.01em;line-height:.98;margin-bottom:22px}
+  .hero h1 span{display:block;color:var(--amber);font-style:italic}
+  .hero p.lead{font-size:1.15rem;color:var(--paper2);max-width:560px;margin-bottom:34px}
+  .hero-meta{display:flex;gap:34px;flex-wrap:wrap;font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;color:var(--muted)}
+  .hero-meta b{display:block;color:var(--paper);font-size:1.3rem;letter-spacing:0;font-family:var(--serif)}
+  .btn{display:inline-block;font-family:var(--mono);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;padding:14px 26px;border:1px solid var(--amber);color:var(--amber);cursor:pointer;background:transparent;transition:all .25s}
+  .btn:hover{background:var(--amber);color:var(--ink)}
+  .btn.solid{background:var(--amber);color:var(--ink)}
+  .btn.solid:hover{background:var(--paper)}
+
+  /* dossier card */
+  .dossier{background:var(--paper);color:var(--ink);padding:28px 26px 24px;box-shadow:0 30px 60px rgba(0,0,0,.6);transform:rotate(1.5deg);position:relative;font-family:var(--mono)}
+  .dossier::before{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);width:90px;height:22px;background:rgba(217,164,65,.55)}
+  .dossier h3{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:14px;display:flex;justify-content:space-between}
+  .dossier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.78rem}
+  .dossier dt{color:#6b6252;text-transform:uppercase;letter-spacing:.08em}
+  .dossier dd{font-weight:bold}
+  .dossier .classified{margin-top:16px;font-size:.65rem;letter-spacing:.3em;color:var(--red);text-align:center;border:1px dashed var(--red);padding:6px}
+  .sketch{width:100%;height:150px;margin-bottom:14px;background:#cfc4a8;border:1px solid #9a8f78;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .sketch svg{height:140px}
+
+  /* ===== SECTIONS ===== */
+  section{padding:100px 0;position:relative}
+  .sec-head{margin-bottom:56px;max-width:720px}
+  .sec-head .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .sec-head .kicker::before{content:"";width:40px;height:1px;background:var(--amber)}
+  .sec-head h2{font-size:clamp(2rem,4.5vw,3.3rem);margin-bottom:14px}
+  .sec-head p{color:var(--muted);font-size:1.05rem}
+  .alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ===== FLIGHT STRIP ===== */
+  .strip{background:var(--amber);color:var(--ink);font-family:var(--mono);font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;padding:12px 0;overflow:hidden;white-space:nowrap;border-top:1px solid #000;border-bottom:1px solid #000}
+  .strip-track{display:inline-block;animation:marquee 40s linear infinite}
+  .strip span{margin-right:50px}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ===== TIMELINE ===== */
+  .tl-wrap{display:grid;grid-template-columns:300px 1fr;gap:50px;align-items:start}
+  .tl-list{position:sticky;top:90px;list-style:none;border-left:1px solid var(--line)}
+  .tl-list li{padding:12px 0 12px 22px;cursor:pointer;position:relative;color:var(--muted);transition:color .2s;font-family:var(--mono);font-size:.8rem}
+  .tl-list li::before{content:"";position:absolute;left:-5px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:var(--line);border:1px solid var(--muted);transition:all .25s}
+  .tl-list li:hover{color:var(--paper)}
+  .tl-list li.active{color:var(--amber)}
+  .tl-list li.active::before{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px var(--amber)}
+  .tl-list li small{display:block;font-size:.65rem;letter-spacing:.1em;opacity:.7}
+  .tl-panel{background:var(--bg2);border:1px solid var(--line);padding:44px;min-height:380px;position:relative}
+  .tl-panel .time{font-family:var(--mono);color:var(--amber);font-size:.8rem;letter-spacing:.2em;margin-bottom:10px}
+  .tl-panel h3{font-size:2rem;margin-bottom:18px}
+  .tl-panel p{color:var(--paper2);font-size:1.05rem;margin-bottom:14px}
+  .tl-panel .quote{border-left:3px solid var(--amber);padding:12px 18px;font-style:italic;color:var(--paper);background:rgba(217,164,65,.05);margin-top:20px}
+  .tl-panel .quote small{display:block;font-style:normal;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:6px;letter-spacing:.1em}
+  .tl-nav{display:flex;gap:10px;margin-top:30px}
+  .tl-nav button{background:none;border:1px solid var(--line);color:var(--paper);padding:10px 18px;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+  .tl-nav button:hover{border-color:var(--amber);color:var(--amber)}
+  .tl-counter{position:absolute;top:20px;right:24px;font-family:var(--mono);font-size:3rem;color:rgba(217,164,65,.12);line-height:1}
+  .fade{animation:fadeIn .45s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* ===== FLIGHT PATH ===== */
+  .map{background:var(--bg2);border:1px solid var(--line);padding:30px;position:relative;overflow:hidden}
+  .map svg{width:100%;height:auto}
+  .map-legend{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.08em}
+  .map-legend i{display:inline-block;width:10px;height:10px;margin-right:8px;vertical-align:middle;border-radius:50%}
+  .plane-dot{offset-path:path("M 150 70 L 150 150 Q 170 300 190 340 L 240 420 L 420 560");animation:fly 9s linear infinite}
+  @keyframes fly{0%{offset-distance:0%;opacity:0}5%{opacity:1}100%{offset-distance:100%;opacity:1}}
+  .conditions{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+  .cond{background:var(--bg);padding:22px 20px}
+  .cond .v{font-size:1.7rem;color:var(--amber);line-height:1.1}
+  .cond .l{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  /* ===== EVIDENCE ===== */
+  .ev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+  .ev{background:var(--paper);color:var(--ink);padding:26px 24px;cursor:pointer;position:relative;transition:transform .3s,box-shadow .3s;border-top:6px solid var(--amber2)}
+  .ev:hover{transform:translateY(-6px) rotate(-.5deg);box-shadow:0 24px 40px rgba(0,0,0,.5)}
+  .ev .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+  .ev h3{font-size:1.35rem;margin-bottom:10px}
+  .ev p{font-size:.92rem;color:#4a4236}
+  .ev .more{position:absolute;right:18px;bottom:14px;font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;color:var(--amber2)}
+  .ev .icon{font-size:2rem;margin-bottom:12px;filter:grayscale(1) opacity(.7)}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+  .modal.open{display:flex}
+  .modal-box{background:var(--paper);color:var(--ink);max-width:640px;width:100%;padding:40px;position:relative;max-height:90vh;overflow:auto;animation:fadeIn .3s}
+  .modal-box h3{font-size:1.8rem;margin-bottom:14px}
+  .modal-box p{margin-bottom:12px;line-height:1.7}
+  .modal-box .tag{font-family:var(--mono);font-size:.65rem;letter-spacing:.25em;color:var(--red);text-transform:uppercase}
+  .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--ink)}
+
+  /* ===== SUSPECTS ===== */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+  .filters button{background:none;border:1px solid var(--line);color:var(--muted);padding:9px 16px;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+  .filters button:hover,.filters button.active{border-color:var(--amber);color:var(--amber)}
+  .sus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+  .sus{border:1px solid var(--line);background:var(--bg);padding:26px;transition:border-color .3s,opacity .3s,transform .3s}
+  .sus:hover{border-color:var(--amber2)}
+  .sus.hidden{display:none}
+  .sus-top{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+  .avatar{width:58px;height:58px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:1.1rem;color:var(--amber);border:1px solid var(--amber2);flex-shrink:0}
+  .sus h3{font-size:1.25rem}
+  .sus .role{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.1em}
+  .sus p{font-size:.93rem;color:var(--paper2);margin-bottom:14px}
+  .meter{height:4px;background:var(--line);position:relative;margin-top:14px}
+  .meter i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--amber2),var(--amber));width:0;transition:width 1.2s ease}
+  .meter-l{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--muted);margin-top:6px;text-transform:uppercase}
+  .status{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border:1px solid;margin-top:4px}
+  .status.cleared{color:#7fa07a;border-color:#7fa07a}
+  .status.open{color:var(--amber);border-color:var(--amber)}
+  .status.dead{color:var(--muted);border-color:var(--muted)}
+  .sus-details{display:none;border-top:1px dashed var(--line);padding-top:12px;margin-top:12px;font-size:.88rem;color:var(--paper2)}
+  .sus.expanded .sus-details{display:block;animation:fadeIn .3s}
+  .sus .toggle{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--amber);cursor:pointer;background:none;border:none;padding:0;text-transform:uppercase}
+
+  /* ===== THEORIES / VOTE ===== */
+  .theories{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .theory{padding:40px;border:1px solid var(--line);position:relative;background:var(--bg)}
+  .theory.dead{border-top:4px solid var(--red)}
+  .theory.alive{border-top:4px solid var(--amber)}
+  .theory h3{font-size:1.9rem;margin-bottom:16px}
+  .theory ul{list-style:none;margin:18px 0 24px}
+  .theory li{padding:8px 0 8px 24px;position:relative;color:var(--paper2);font-size:.95rem;border-bottom:1px solid var(--line)}
+  .theory li::before{content:"›";position:absolute;left:4px;color:var(--amber);font-size:1.2rem;line-height:1.2}
+  .vote-bar{height:12px;background:var(--line);margin-top:30px;position:relative;overflow:hidden}
+  .vote-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--amber);transition:width .8s ease}
+  .vote-res{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--muted);margin-top:8px}
+  .vote-note{font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:10px;text-align:center}
+  .vote-wrap{grid-column:1/-1;border:1px solid var(--line);padding:30px 40px;background:var(--bg2)}
+
+  /* ===== MONEY CALC ===== */
+  .money{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .bill{background:#b9c7a6;color:#223;padding:26px;border:3px double #3b4a33;font-family:var(--mono);position:relative;transform:rotate(-2deg);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+  .bill .denom{position:absolute;font-size:1.6rem;font-weight:bold}
+  .bill .denom.tl{top:10px;left:14px}.bill .denom.br{bottom:10px;right:14px}
+  .bill .serial{font-size:.8rem;letter-spacing:.15em;color:#4c6a3a;text-align:center;margin-top:10px}
+  .bill .big{font-size:2.3rem;text-align:center;letter-spacing:.1em;margin:30px 0 4px}
+  .bill .fed{font-size:.6rem;text-align:center;letter-spacing:.3em}
+  .calc label{font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px}
+  .calc input[type=range]{width:100%;accent-color:var(--amber);margin-bottom:10px}
+  .calc .out{font-size:clamp(2rem,4vw,3rem);color:var(--amber);line-height:1.1;margin:10px 0 6px}
+  .calc .sub{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .fact{border:1px solid var(--line);padding:14px 16px;font-size:.88rem;color:var(--paper2)}
+  .fact b{display:block;color:var(--paper);font-size:1.2rem;font-weight:400}
+
+  /* ===== QUIZ ===== */
+  .quiz{max-width:760px;margin:0 auto;background:var(--paper);color:var(--ink);padding:44px}
+  .quiz .q-num{font-family:var(--mono);font-size:.68rem;letter-spacing:.25em;color:var(--red);text-transform:uppercase;margin-bottom:14px}
+  .quiz h3{font-size:1.6rem;margin-bottom:22px}
+  .opts{display:grid;gap:10px}
+  .opt{text-align:left;background:#f4efe2;border:1px solid #c9bea2;padding:14px 18px;cursor:pointer;font-family:var(--serif);font-size:1rem;transition:all .2s;color:var(--ink)}
+  .opt:hover{border-color:var(--ink);background:#fff9ea}
+  .opt.correct{background:#cfe3c3;border-color:#4d7a3e}
+  .opt.wrong{background:#eccaca;border-color:var(--red)}
+  .opt:disabled{cursor:default}
+  .quiz .explain{margin-top:18px;padding:14px 18px;background:#ebe3cf;border-left:3px solid var(--amber2);font-size:.92rem;display:none}
+  .quiz .explain.show{display:block;animation:fadeIn .3s}
+  .quiz-foot{display:flex;justify-content:space-between;align-items:center;margin-top:24px;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em}
+  .quiz-foot button{background:var(--ink);color:var(--paper);border:none;padding:12px 22px;font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
+  .quiz-foot button:disabled{opacity:.35;cursor:default}
+  .quiz-result{text-align:center}
+  .quiz-result .score{font-size:4rem;color:var(--amber2);line-height:1}
+
+  /* ===== FAQ ===== */
+  .faq{max-width:820px;margin:0 auto}
+  .faq-item{border-bottom:1px solid var(--line)}
+  .faq-q{width:100%;text-align:left;background:none;border:none;color:var(--paper);font-family:var(--serif);font-size:1.15rem;padding:22px 50px 22px 0;cursor:pointer;position:relative}
+  .faq-q::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--mono);color:var(--amber);font-size:1.5rem;transition:transform .3s}
+  .faq-item.open .faq-q::after{transform:translateY(-50%) rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;color:var(--paper2)}
+  .faq-a p{padding:0 0 22px;font-size:.98rem}
+
+  /* ===== FOOTER ===== */
+  footer{padding:60px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  footer .container{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+  footer h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--paper);margin-bottom:14px}
+  footer ul{list-style:none}
+  footer li{margin-bottom:8px}
+  footer li a{color:var(--muted)}
+  footer li a:hover{color:var(--amber)}
+  .copy{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  .top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:1px solid var(--amber);background:var(--bg);color:var(--amber);cursor:pointer;font-size:1.1rem;opacity:0;pointer-events:none;transition:opacity .3s;z-index:90}
+  .top.show{opacity:1;pointer-events:auto}
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:960px){
+    .hero .container{grid-template-columns:1fr}
+    .dossier{transform:none;max-width:420px}
+    .tl-wrap{grid-template-columns:1fr}
+    .tl-list{position:static;display:flex;overflow-x:auto;border-left:none;border-bottom:1px solid var(--line);gap:4px;padding-bottom:4px}
+    .tl-list li{flex:0 0 auto;padding:10px 14px;white-space:nowrap}
+    .tl-list li::before{display:none}
+    .tl-list li.active{border-bottom:2px solid var(--amber)}
+    .theories,.money{grid-template-columns:1fr}
+    footer .container{grid-template-columns:1fr}
+  }
+  @media(max-width:720px){
+    .nav-links{position:fixed;top:62px;left:0;right:0;background:var(--bg);flex-direction:column;padding:20px 5%;gap:18px;border-bottom:1px solid var(--line);display:none}
+    .nav-links.open{display:flex}
+    .burger{display:block}
+    section{padding:70px 0}
+    .tl-panel{padding:28px 22px}
+    .theory,.quiz,.vote-wrap{padding:26px 20px}
+    .facts{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav id="nav">
+  <div class="container">
+    <a href="#top" class="brand"><span class="dot"></span>NORJAK <b>// Дело № 164-81</b></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#timeline">Хронология</a></li>
+      <li><a href="#flight">Полёт</a></li>
+      <li><a href="#evidence">Улики</a></li>
+      <li><a href="#suspects">Подозреваемые</a></li>
+      <li><a href="#theories">Теории</a></li>
+      <li><a href="#money">Деньги</a></li>
+      <li><a href="#quiz">Тест</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div>
+      <div class="stamp">Нераскрыто с 24.11.1971</div>
+      <h1>Человек, который<br>шагнул в ночь <span>Дело Д. Б. Купера</span></h1>
+      <p class="lead">Канун Дня благодарения 1971 года. Мужчина в тёмном костюме угнал Boeing 727, получил 200 000 долларов и четыре парашюта, а затем выпрыгнул в дождливую темноту над лесами штата Вашингтон. Его больше никто не видел.</p>
+      <div class="hero-meta">
+        <div><b id="yearsCounter">54</b>года без ответа</div>
+        <div><b>$200 000</b>выкуп в 20-долларовых купюрах</div>
+        <div><b>~10 000 ft</b>высота прыжка</div>
+        <div><b>1</b>нераскрытый угон в США</div>
+      </div>
+      <div style="margin-top:38px;display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#timeline" class="btn solid">Открыть досье</a>
+        <a href="#theories" class="btn">Выжил или погиб?</a>
+      </div>
+    </div>
+    <aside class="dossier">
+      <h3><span>ФБР · Ориентировка</span><span>Файл 164-81</span></h3>
+      <div class="sketch" aria-label="Фоторобот">
+        <svg viewBox="0 0 120 140" fill="none" stroke="#2a2418" stroke-width="1.6" stroke-linecap="round">
+          <ellipse cx="60" cy="58" rx="30" ry="38"/>
+          <path d="M30 50 Q34 22 60 20 Q88 22 90 50 Q84 38 60 36 Q36 38 30 50Z" fill="#2a2418"/>
+          <path d="M42 56 q8 -5 16 0 M62 56 q8 -5 16 0" stroke-width="2"/>
+          <path d="M44 62 a6 3 0 0 0 12 0 M64 62 a6 3 0 0 0 12 0"/>
+          <circle cx="50" cy="62" r="1.6" fill="#2a2418"/><circle cx="70" cy="62" r="1.6" fill="#2a2418"/>
+          <path d="M60 64 v14 q-3 4 -6 2"/>
+          <path d="M50 86 q10 5 20 0"/>
+          <path d="M32 56 q-6 0 -4 10 q2 6 6 4 M88 56 q6 0 4 10 q-2 6 -6 4"/>
+          <path d="M44 96 l16 10 l16 -10 M20 140 q4 -38 24 -44 l16 10 l16 -10 q20 6 24 44"/>
+          <path d="M60 106 l-5 10 l5 20 l5 -20z" fill="#2a2418"/>
+          <path d="M52 96 l8 10 l8 -10" stroke="#f3eee0"/>
+        </svg>
+      </div>
+      <dl>
+        <dt>Имя</dt><dd>«Дэн Купер»</dd>
+        <dt>Возраст</dt><dd>40–50 лет (по оценке)</dd>
+        <dt>Рост</dt><dd>178–183 см</dd>
+        <dt>Одежда</dt><dd>Тёмный костюм, белая рубашка, чёрный галстук-клипса, плащ</dd>
+        <dt>Приметы</dt><dd>Оливковая кожа, тёмные очки, спокоен, вежлив</dd>
+        <dt>Заказ</dt><dd>Бурбон с содовой, сигареты Raleigh</dd>
+        <dt>Статус</dt><dd>Неизвестен</dd>
+      </dl>
+      <div class="classified">ДЕЛО ЗАКРЫТО ФБР · ИЮЛЬ 2016 · НЕ РАСКРЫТО</div>
+    </aside>
+  </div>
+</header>
+
+<!-- ===== STRIP ===== -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track" id="stripTrack">
+    <span>Northwest Orient Flight 305</span><span>Портленд → Сиэтл</span><span>Boeing 727-100 · N467US</span><span>Место 18C</span><span>«У меня в портфеле бомба»</span><span>200 000 $ · 4 парашюта</span><span>Вылет 14:50 · 24.11.1971</span><span>Прыжок ≈ 20:13</span><span>Закрылки 15° · Шасси выпущены · 10 000 футов</span>
+  </div>
+</div>
+
+<!-- ===== TIMELINE ===== -->
+<section id="timeline">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Хронология</div>
+      <h2>Один вечер, который длится полвека</h2>
+      <p>Всё произошло за несколько часов 24 ноября 1971 года. Нажимайте на события, чтобы пройти путь рейса 305 минута за минутой.</p>
+    </div>
+    <div class="tl-wrap reveal">
+      <ul class="tl-list" id="tlList"></ul>
+      <div class="tl-panel" id="tlPanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FLIGHT ===== -->
+<section id="flight" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Полёт и прыжок</div>
+      <h2>Куда он упал?</h2>
+      <p>Самолёт шёл по воздушной трассе Victor 23 на юг. По данным ФБР, прыжок произошёл около 20:13 где-то над юго-западом штата Вашингтон — вероятно, в районе озера Мервин и городка Ариэль.</p>
+    </div>
+    <div class="map reveal">
+      <svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M50 0H0V50" fill="none" stroke="#1f1b16" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="900" height="620" fill="url(#grid)"/>
+        <!-- coastline-ish shape -->
+        <path d="M0 0 L120 0 Q80 120 110 250 Q70 380 100 520 L60 620 L0 620Z" fill="#111008" stroke="#2b2721"/>
+        <text x="20" y="310" fill="#3b352c" font-family="Courier New" font-size="12" transform="rotate(-90 20 310)">ТИХИЙ ОКЕАН</text>
+        <!-- rivers -->
+        <path d="M900 420 Q700 430 520 470 Q400 500 300 560 Q200 600 110 580" fill="none" stroke="#1d3340" stroke-width="6" stroke-linecap="round"/>
+        <text x="560" y="455" fill="#3d6a80" font-family="Courier New" font-size="12">р. Колумбия</text>
+        <!-- Lake Merwin -->
+        <path d="M360 360 Q400 350 440 365 Q470 375 500 360" fill="none" stroke="#1d3340" stroke-width="10" stroke-linecap="round"/>
+        <text x="365" y="345" fill="#3d6a80" font-family="Courier New" font-size="11">оз. Мервин</text>
+        <!-- Flight path -->
+        <path d="M 150 70 L 150 150 Q 170 300 190 340 L 240 420 L 420 560" fill="none" stroke="#d9a441" stroke-width="2" stroke-dasharray="8 6"/>
+        <text x="200" y="250" fill="#8d8273" font-family="Courier New" font-size="11">трасса Victor 23</text>
+        <!-- Jump zone -->
+        <circle cx="330" cy="380" r="70" fill="rgba(168,52,42,.08)" stroke="#a8342a" stroke-dasharray="4 4"/>
+        <circle cx="330" cy="380" r="70" fill="none" stroke="#a8342a" opacity=".5">
+          <animate attributeName="r" values="40;90" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".6;0" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <text x="330" y="470" fill="#a8342a" font-family="Courier New" font-size="12" text-anchor="middle">ПРЕДПОЛАГАЕМАЯ ЗОНА ПРЫЖКА ≈ 20:13</text>
+        <!-- cities -->
+        <g font-family="Courier New" font-size="13" fill="#e9e1cf">
+          <circle cx="150" cy="70" r="6" fill="#d9a441"/><text x="166" y="75">Сиэтл-Такома (вылет 19:40)</text>
+          <circle cx="330" cy="380" r="5" fill="#a8342a"/><text x="345" y="384" fill="#e9e1cf">Ариэль, WA</text>
+          <circle cx="250" cy="548" r="5" fill="#e9e1cf"/><text x="265" y="552">Портленд (откуда начался рейс)</text>
+          <circle cx="215" cy="520" r="5" fill="#7fa07a"/><text x="110" y="508" fill="#7fa07a">Тена-Бар — найдены деньги (1980)</text>
+          <circle cx="420" cy="560" r="6" fill="#d9a441"/><text x="436" y="565">→ Рино, Невада (посадка 22:15)</text>
+        </g>
+        <!-- compass -->
+        <g transform="translate(830 70)" stroke="#8d8273" fill="none"><circle r="26"/><path d="M0 -26 L6 0 L0 26 L-6 0Z" fill="#8d8273"/><text y="-32" text-anchor="middle" fill="#8d8273" font-family="Courier New" font-size="12" stroke="none">N</text></g>
+        <!-- moving plane -->
+        <g class="plane-dot"><circle r="7" fill="#d9a441"/><circle r="14" fill="none" stroke="#d9a441" opacity=".4"/></g>
+      </svg>
+      <div class="map-legend">
+        <span><i style="background:#d9a441"></i>Маршрут рейса 305 после Сиэтла</span>
+        <span><i style="background:#a8342a"></i>Зона поиска ФБР</span>
+        <span><i style="background:#7fa07a"></i>Место находки купюр</span>
+      </div>
+    </div>
+    <div class="conditions reveal">
+      <div class="cond"><div class="v" data-count="10000">0</div><div class="l">футов — высота</div></div>
+      <div class="cond"><div class="v" data-count="170">0</div><div class="l">узлов — скорость (~315 км/ч)</div></div>
+      <div class="cond"><div class="v">−7 °C</div><div class="l">температура за бортом</div></div>
+      <div class="cond"><div class="v">Дождь</div><div class="l">облачность, ветер, темнота</div></div>
+      <div class="cond"><div class="v" data-count="9">0</div><div class="l">кг — вес выкупа</div></div>
+      <div class="cond"><div class="v">Лоферы</div><div class="l">обувь, костюм, плащ</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVIDENCE ===== -->
+<section id="evidence">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Вещественные доказательства</div>
+      <h2>Что он оставил после себя</h2>
+      <p>Купер забрал деньги, портфель и два парашюта. Но в салоне остались предметы, которые до сих пор анализируют криминалисты и энтузиасты. Нажмите на карточку.</p>
+    </div>
+    <div class="ev-grid reveal" id="evGrid"></div>
+  </div>
+</section>
+
+<!-- ===== SUSPECTS ===== -->
+<section id="suspects" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Подозреваемые</div>
+      <h2>Более тысячи имён. Ни одного доказанного.</h2>
+      <p>За годы расследования ФБР проверило свыше 1000 человек. Вот самые известные кандидаты — и почему каждый из них не подошёл идеально.</p>
+    </div>
+    <div class="filters reveal" id="filters">
+      <button class="active" data-f="all">Все</button>
+      <button data-f="open">Не исключены</button>
+      <button data-f="cleared">Исключены ФБР</button>
+      <button data-f="confession">Признания</button>
+      <button data-f="military">Военное прошлое</button>
+    </div>
+    <div class="sus-grid reveal" id="susGrid"></div>
+  </div>
+</section>
+
+<!-- ===== THEORIES ===== -->
+<section id="theories">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Две версии</div>
+      <h2>Он выжил?</h2>
+      <p>ФБР официально считает, что Купер, скорее всего, не пережил прыжок. Но тело так и не нашли, а большая часть денег не всплыла. Выберите свою сторону.</p>
+    </div>
+    <div class="theories reveal">
+      <div class="theory dead">
+        <div class="kicker mono accent" style="font-size:.68rem;letter-spacing:.25em">Версия ФБР</div>
+        <h3>Погиб в ту же ночь</h3>
+        <p style="color:var(--paper2)">Агент Ральф Химмельсбах, ведший дело 8 лет, называл Купера «грязным, паршивым вором», которому просто не могло повезти.</p>
+        <ul>
+          <li>Прыжок ночью, в дождь, при −7 °C, в костюме и лоферах, без защитных очков</li>
+          <li>Не умел определить место прыжка — не было навигации</li>
+          <li>Выбрал запасной парашют, который оказался учебным и зашитым</li>
+          <li>Ни одна из 10 000 купюр не попала в оборот</li>
+          <li>Деньги на Тена-Бар — возможно, вымыты рекой из места гибели</li>
+        </ul>
+        <button class="btn" data-vote="dead">Голосую: погиб</button>
+      </div>
+      <div class="theory alive">
+        <div class="kicker mono accent" style="font-size:.68rem;letter-spacing:.25em">Версия энтузиастов</div>
+        <h3>Выжил и исчез</h3>
+        <p style="color:var(--paper2)">Купер знал про аэродинамику 727, точный режим полёта для прыжка и что заднюю лестницу можно открыть в воздухе. Это не случайный человек.</p>
+        <ul>
+          <li>Потребовал закрылки 15°, скорость ниже 200 узлов, негерметичный салон — профессиональные знания</li>
+          <li>Boeing 727 — единственный лайнер с задней лестницей, из которой можно выпрыгнуть</li>
+          <li>Тело и основной парашют не найдены за 50 лет поисков</li>
+          <li>Купюры 1980 года лежали аккуратной пачкой — так не выглядит мусор, вымытый рекой</li>
+          <li>Подражатель Ричард Маккой в 1972 году совершил такой же прыжок и выжил</li>
+        </ul>
+        <button class="btn" data-vote="alive">Голосую: выжил</button>
+      </div>
+      <div class="vote-wrap">
+        <div class="mono" style="font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)">Голосование посетителей</div>
+        <div class="vote-bar"><i id="voteFill" style="width:50%"></i></div>
+        <div class="vote-res"><span id="voteAlive">Выжил — 50%</span><span id="voteDead">Погиб — 50%</span></div>
+        <div class="vote-note" id="voteNote">Голоса сохраняются в вашем браузере. Один голос на устройство — но передумать можно.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MONEY ===== -->
+<section id="money" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Выкуп</div>
+      <h2>10 000 купюр с переписанными номерами</h2>
+      <p>Банк Seattle-First National выдал ФБР 200 000 долларов 20-долларовыми купюрами серии 1969 года. Все серийные номера были сфотографированы на микрофильм — и ни один так и не всплыл в банках.</p>
+    </div>
+    <div class="money reveal">
+      <div class="bill">
+        <span class="denom tl">20</span><span class="denom br">20</span>
+        <div class="fed">FEDERAL RESERVE NOTE · THE UNITED STATES OF AMERICA</div>
+        <div class="big">TWENTY DOLLARS</div>
+        <div class="fed">SERIES 1969 · SAN FRANCISCO (L)</div>
+        <div class="serial" id="serial">L 14 345 889 A</div>
+        <div style="font-size:.6rem;text-align:center;margin-top:16px;color:#4c6a3a;letter-spacing:.15em">ОДНА ИЗ 10 000 · ФБР ЗАПИСАЛО КАЖДЫЙ НОМЕР</div>
+      </div>
+      <div class="calc">
+        <label for="yearRange">Сколько стоили бы 200 000 $ 1971 года в <span id="yearLabel">2026</span> году?</label>
+        <input type="range" id="yearRange" min="1971" max="2026" value="2026">
+        <div class="out" id="moneyOut">≈ $1 580 000</div>
+        <div class="sub">Пересчёт по приблизительному индексу потребительских цен США. В 1971 году на эти деньги можно было купить около 8 домов среднего размера.</div>
+        <div class="facts">
+          <div class="fact"><b>$5 800</b>найдено в 1980 году 8-летним Брайаном Инграмом на берегу Колумбии</div>
+          <div class="fact"><b>290</b>купюр в трёх пачках — все номера совпали со списком ФБР</div>
+          <div class="fact"><b>$194 200</b>до сих пор не найдены и официально не потрачены</div>
+          <div class="fact"><b>$37 000</b>заплатили на аукционе 2008 года за 15 из найденных купюр</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="quiz">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Проверьте себя</div>
+      <h2>Вы готовы вести дело NORJAK?</h2>
+      <p>Семь вопросов на внимательность. Ответы спрятаны на этой странице.</p>
+    </div>
+    <div class="quiz reveal" id="quizBox"></div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">Частые вопросы</div>
+      <h2>Коротко о главном</h2>
+    </div>
+    <div class="faq reveal" id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <h4>NORJAK — досье</h4>
+      <p>Northwest Hijacking — кодовое название дела в ФБР. 8 июля 2016 года Бюро объявило, что прекращает активное расследование, чтобы «перенаправить ресурсы», но продолжит принимать физические улики — парашюты или деньги.</p>
+    </div>
+    <div>
+      <h4>Разделы</h4>
+      <ul>
+        <li><a href="#timeline">Хронология</a></li>
+        <li><a href="#evidence">Улики</a></li>
+        <li><a href="#suspects">Подозреваемые</a></li>
+        <li><a href="#theories">Теории</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Источники</h4>
+      <ul>
+        <li><a href="https://www.fbi.gov/history/famous-cases/db-cooper-hijacking" target="_blank" rel="noopener">FBI: D.B. Cooper Hijacking</a></li>
+        <li><a href="https://vault.fbi.gov/D-B-Cooper%20" target="_blank" rel="noopener">FBI Vault — рассекреченные файлы</a></li>
+        <li><a href="https://ru.wikipedia.org/wiki/Д._Б._Купер" target="_blank" rel="noopener">Википедия</a></li>
+      </ul>
+    </div>
+    <div class="copy">
+      <span>Образовательный проект · HTML / CSS / JS без библиотек</span>
+      <span>Фото: Pexels · Факты по открытым материалам ФБР</span>
+    </div>
+  </div>
+</footer>
+
+<button class="top" id="toTop" aria-label="Наверх">↑</button>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+/* ========== DATA ========== */
+const timeline = [
+  {t:'24.11.1971 · ~14:00', title:'Билет за 18,52 $', text:'В аэропорту Портленда мужчина средних лет покупает за наличные билет в один конец до Сиэтла на рейс 305 авиакомпании Northwest Orient. В билете он пишет имя «Дэн Купер». Тёмный костюм, белая рубашка, чёрный галстук-клипса, плащ, портфель. Ничего примечательного.', quote:'Он выглядел как обычный бизнесмен. Вежливый. Он заказал бурбон с содовой и заплатил за него.', who:'Флоренс Шаффнер, бортпроводница'},
+  {t:'14:50', title:'Вылет. Место 18C', text:'Boeing 727-100 взлетает с 36 пассажирами и 6 членами экипажа. Купер садится в последнем ряду у окна, закуривает Raleigh и вскоре передаёт записку бортпроводнице Флоренс Шаффнер. Та, решив, что это номер телефона, кладёт её в карман не читая.', quote:'Мисс, вам лучше прочитать эту записку. У меня бомба.', who:'Слова Купера, по показаниям Шаффнер'},
+  {t:'~15:00', title:'Портфель с «бомбой»', text:'Шаффнер садится рядом. Купер приоткрывает портфель: восемь красных цилиндров, провода, большая батарея. Он диктует требования: 200 000 долларов «в обращающейся американской валюте», четыре парашюта и заправщик в Сиэтле. Записку он забирает обратно — она так и не попала к следствию.', quote:'Никаких фокусов, или я сделаю своё дело.', who:'Из записки Купера'},
+  {t:'15:20–17:39', title:'Два часа кругов над Пьюджет-Саунд', text:'Пилот Уильям Скотт сообщает диспетчерам о захвате. Президент Northwest Orient Дональд Найроп приказывает выполнить все требования. Пока ФБР собирает деньги и парашюты, самолёт кружит над заливом. Пассажирам говорят о «небольшой технической неполадке». Купер спокоен, заказывает второй бурбон.', quote:null},
+  {t:'17:39', title:'Посадка в Сиэтл-Такома', text:'Самолёт садится в сумерках. Купер требует подрулить в освещённую, но удалённую часть перрона и опустить шторки. Сотрудник авиакомпании Эл Ли в гражданской одежде приносит по задней лестнице рюкзак с 10 000 20-долларовых купюр (все номера на микрофильме ФБР) и четыре парашюта. Взамен Купер отпускает всех 36 пассажиров и двух бортпроводниц.', quote:null},
+  {t:'19:40', title:'Инструкции профессионала', text:'Купер оставляет на борту пилотов, бортинженера и стюардессу Тину Маклоу. Он требует: курс на Мехико, высота не выше 10 000 футов, закрылки 15°, шасси выпущены, скорость не больше 200 узлов, салон без наддува, задняя лестница открыта при взлёте. Экипаж убеждает его сделать дозаправку в Рино. Самолёт взлетает с истребителями F-106 на хвосте — те не видели ничего.', quote:'Он явно знал, о чём говорит. Таких деталей не знает случайный человек.', who:'Тина Маклоу, бортпроводница'},
+  {t:'~20:00', title:'«Идите в кабину и закройте дверь»', text:'Купер пытается привязать мешок с деньгами к себе стропами, отрезанными от одного из парашютов. Он отсылает Маклоу в кабину. В 20:00 в кабине загорается индикатор: задняя лестница расцепилась. Экипаж предлагает по громкой связи помощь. Ответ: «Нет».', quote:null},
+  {t:'≈20:13', title:'Скачок давления', text:'Над юго-западом штата Вашингтон, в дождь и облачность, экипаж чувствует резкий скачок давления и ощутимое «покачивание» хвоста — это трап под весом человека опустился и отпружинил обратно. Купер шагнул в ночь при −7 °C и ветре 300 км/ч. Это последнее, что о нём известно достоверно.', quote:'Мы почувствовали, как хвост клюнул. Мы тогда ещё не знали, но это был момент, когда он прыгнул.', who:'Уильям Ратачак, второй пилот'},
+  {t:'22:15', title:'Посадка в Рино', text:'727 садится в Рино с частично выпущенной лестницей. Агенты ФБР с оружием врываются в салон — там пусто. На месте остались два парашюта (один вскрыт, из него вырезаны стропы), галстук-клипса, перламутровая заколка и восемь окурков. Начинается самая масштабная охота в истории Бюро.', quote:null},
+  {t:'10.02.1980', title:'Деньги на Тена-Бар', text:'Восьмилетний Брайан Инграм на пикнике с семьёй разгребает песок на берегу реки Колумбия в 14 км от Ванкувера, WA, и находит три полуистлевшие пачки 20-долларовых купюр — 5 800 долларов. Номера совпадают с выкупом. Это единственная из найденных денег. Как они туда попали — спорят до сих пор.', quote:null},
+  {t:'08.07.2016', title:'ФБР закрывает дело', text:'Спустя 45 лет Бюро официально прекращает активное расследование NORJAK, проверив более 1 000 подозреваемых. Дело остаётся единственным нераскрытым угоном коммерческого самолёта в истории США. Частные исследователи продолжают работу: анализ частиц на галстуке, новые кандидаты, поиски парашюта.', quote:'Ресурсы перенаправлены на более приоритетные задачи. Но если кто-то найдёт парашют или деньги — мы по-прежнему хотим об этом знать.', who:'Заявление ФБР, 2016'}
+];
+
+const evidence = [
+  {icon:'👔', tag:'Улика № 1', title:'Галстук-клипса', short:'Чёрный галстук Towncraft из J. C. Penney за 1,49 $. Купер снял его перед прыжком.', long:'Клипса-галстук осталась на сиденье 18E. В 2009–2017 годах частная команда под руководством палеонтолога Тома Кея исследовала его электронным микроскопом и нашла более 100 000 частиц: чистый титан, редкоземельные металлы — церий, стронций, сульфид лантана. В 1971 году такой набор был характерен для инженеров аэрокосмической и химической отрасли — например, завода Boeing по программе сверхзвукового лайнера или Crucible Steel. На галстуке также была ДНК, но частичная и смешанная.'},
+  {icon:'🚬', tag:'Улика № 2', title:'Восемь окурков Raleigh', short:'Купер курил сигареты Raleigh с фильтром. Окурки собрали в Рино.', long:'Восемь окурков были упакованы и переданы в отделение ФБР в Лас-Вегасе. Когда в 2000-х появилась возможность выделить ДНК, выяснилось, что окурки утеряны. Это одна из самых болезненных потерь в деле — современный анализ мог бы однозначно сравнить ДНК со всеми подозреваемыми.'},
+  {icon:'🪂', tag:'Улика № 3', title:'Два оставленных парашюта', short:'Купер забрал два из четырёх. Один из оставленных — учебный, зашитый муляж.', long:'Четыре парашюта привёз пилот-каскадёр Эрл Коссей (два основных, два запасных). Купер взял основной военный NB-6 и один запасной. На борту он оставил второй основной и запасной — последний оказался учебным, с зашитым куполом и пометкой. Споры о том, какой запасной он взял, идут до сих пор: по одной версии, он мог взять нерабочий муляж. Из оставленного парашюта он вырезал стропы — вероятно, чтобы привязать мешок с деньгами.'},
+  {icon:'💵', tag:'Улика № 4', title:'5 800 $ с Тена-Бар', short:'Три пачки истлевших купюр, найденные в 1980 году. Все номера — из списка выкупа.', long:'Купюры лежали примерно в 8 см под песком, по-прежнему перетянутые резинками (которые по тестам разрушаются за год-два). Геолог Лео Уинтер и другие исследователи спорят, могла ли река принести их из зоны прыжка — Тена-Бар находится ниже по течению от реки Льюис, но не совсем там, где ожидалось. Купюры — единственное физическое подтверждение, что Купер (или деньги) покинули самолёт в этом районе.'},
+  {icon:'📎', tag:'Улика № 5', title:'Перламутровая заколка', short:'Заколка для галстука из искусственного перламутра — осталась вместе с галстуком.', long:'Небольшая деталь, которая рассказывает о человеке: недорогая, массовая, купленная в универмаге. В сочетании с галстуком за 1,49 $ она даёт портрет не состоятельного бизнесмена, а человека среднего достатка, который хотел выглядеть «как все».'},
+  {icon:'📝', tag:'Улика № 6', title:'Записка и фоторобот', short:'Записку Купер забрал. Остались два фоторобота, составленных по показаниям свидетелей.', long:'Записка написана печатными буквами фломастером — так запомнила Шаффнер. Купер забрал её. Фоторобот «B» 1972 года, созданный на основе показаний стюардесс и пассажиров, стал одним из самых узнаваемых изображений в истории американской криминалистики: аккуратный мужчина 40–50 лет с оливковой кожей, тёмными волосами и в тёмных очках-«капельках».'},
+  {icon:'✈️', tag:'Улика № 7', title:'Boeing 727 и задняя лестница', short:'Единственный лайнер, с которого можно безопасно выпрыгнуть в полёте.', long:'Задний трап 727 выпускается под хвост, вне зоны реактивных струй двигателей. Купер знал, что его можно открыть в воздухе — об этом тогда знали в основном люди из ЦРУ (так забрасывали агентов в Юго-Восточной Азии) и сотрудники авиаотрасли. После серии подражаний Boeing установил на все 727 «лопатку Купера» — механический замок, который блокирует трап в полёте.'},
+  {icon:'🏷️', tag:'Улика № 8', title:'Имя «Дэн Купер»', short:'Так звали героя франко-бельгийского комикса о десантнике. Пресса ошиблась и назвала его «Д. Б.».', long:'Комикс «Dan Cooper» художника Альбера Вайнберга выходил во франкоязычной Европе и Канаде, но не в США. Это одна из причин, почему следствие рассматривало версию о канадском происхождении угонщика. «Д. Б.» появилось по ошибке: репортёр перепутал его с портлендцем Д. Б. Купером, которого полиция проверила и сразу исключила. Ошибка прижилась навсегда.'}
+];
+
+const suspects = [
+  {name:'Ричард Маккой-младший', init:'РМ', role:'Ветеран Вьетнама, вертолётчик', tags:['open','military'], status:'open', statusText:'Не исключён', score:72, short:'Через пять месяцев после Купера, в апреле 1972 года, совершил почти идентичный угон 727 с 500 000 $ и успешным прыжком. Пойман через два дня, бежал из тюрьмы и был убит агентами ФБР в 1974 году.', long:'Маккой — парашютист-любитель и десантник — идеально подходил по навыкам, но не по внешности: ему было 29, а не 45. ФБР его исключило, однако в 2024 году его дети Чанте и Рик Маккой III заявили, что нашли на участке покойной матери парашют NB-6 с модифицированным ранцем и бортовой журнал. ФБР, по сообщениям, изъяло парашют для экспертизы. Это первая за много лет физическая улика, которую Бюро взяло в работу.'},
+  {name:'Дуэйн Уэбер', init:'ДУ', role:'Ветеран, бывший заключённый', tags:['confession'], status:'cleared', statusText:'ДНК не совпала', score:35, short:'В 1995 году на смертном одре сказал жене Джо: «Я — Дэн Купер». Она вспомнила ночной кошмар мужа о прыжке и его поездку на Тена-Бар в 1979 году — за год до находки денег.', long:'Уэбер отбывал срок в тюрьме Макнил-Айленд недалеко от Сиэтла, имел травму колена «после прыжка из самолёта» и внешне напоминал фоторобот. В 1998 году ФБР сравнило его отпечатки с найденными в самолёте — без совпадения; в 2001 году — частичную ДНК с галстука. Тоже нет. Но насколько ДНК на галстуке принадлежит именно Куперу, никто не знает.'},
+  {name:'Кеннет Кристиансен', init:'КК', role:'Десантник, сотрудник Northwest Orient', tags:['open','military'], status:'open', statusText:'Не подтверждён', score:55, short:'Бывший парашютист армии США, работал механиком и стюардом в Northwest. Курил, пил бурбон, носил галстук-клипсу. Через год после угона купил дом за наличные.', long:'Кандидата выдвинул брат Лайл после смерти Кеннета в 1994 году: умирая, тот сказал «Есть кое-что, что вы должны знать, но я не могу вам сказать». Стюардесса Флоренс Шаффнер назвала его фото «наиболее похожим из всех». Против версии: рост 173 см (ниже описания), худощавое телосложение, а ФБР посчитало, что для прыжка он был «слишком опытен» — опытный десантник не прыгнул бы в таких условиях.'},
+  {name:'Роберт Ракстро', init:'РР', role:'Пилот, ветеран Вьетнама, аферист', tags:['military','cleared'], status:'cleared', statusText:'Исключён ФБР в 1979', score:40, short:'Десантник с подготовкой по взрывчатке, пилот, опытный лжец. В 1978 году инсценировал собственную гибель, выпрыгнув с самолёта над заливом Монтерей.', long:'ФБР всерьёз рассматривало Ракстро в 1978–1979 годах, но исключило: ему было 28 лет, и экипаж его не опознал. В 2016 году команда Томаса Колберта с помощью бывших агентов выпустила книгу и фильм, где называет его Купером и даже утверждает, что расшифровала «код» в анонимных письмах 1971 года. Ракстро умер в 2019 году, всё отрицая — и одновременно подыгрывая слухам.'},
+  {name:'Линн Дойл Купер', init:'ЛК', role:'Ветеран Корейской войны, лесоруб', tags:['confession','military'], status:'cleared', statusText:'Отпечатки не совпали', score:30, short:'В 2011 году его племянница Марла Купер рассказала, что в День благодарения 1971 года дядя Л. Д. явился домой в крови с «автомобильной аварией» и сказал: «Мы сделали это, наши проблемы с деньгами решены».', long:'Л. Д. Купер был фанатом комикса про Дэна Купера, жил в Орегоне, имел опыт в лесах. ФБР назвало версию «правдоподобной», но сравнение отпечатков и частичной ДНК совпадений не дало. Он умер в 1999 году. Марла стоит на своём: по её словам, семья много лет хранила эту тайну.'},
+  {name:'Шеридан Питерсон', init:'ШП', role:'Морпех, технический писатель Boeing', tags:['open','military'], status:'open', statusText:'Официально не исключён', score:45, short:'Опытный парашютист с опытом прыжков в дым пожаров, работал в Boeing, во время угона якобы находился в Непале. Внешне очень похож на фоторобот и подходил по возрасту — 44 года.', long:'Питерсон увлекался экстремальными прыжками, был антиправительственным активистом и бунтарём. Агенты, работавшие по делу, называли его одним из лучших кандидатов, но прямых улик не было. Он с иронией отказывался что-либо подтверждать или опровергать до самой смерти в 2021 году.'},
+  {name:'Барбара Дейтон', init:'БД', role:'Пилот, бывший военный, библиотекарь', tags:['confession'], status:'cleared', statusText:'Признание отозвано', score:15, short:'Первая в штате Вашингтон женщина, сделавшая операцию по смене пола (1969). Утверждала, что совершила угон в мужском обличье из мести авиаиндустрии, которая не брала её в пилоты.', long:'Дейтон якобы рассказала о захвате друзьям Рону и Пэт Форман, а затем отказалась от признания, узнав, что может быть привлечена к ответственности. Деньги, по её словам, были спрятаны в цистерне под Вудлендом. ФБР версию серьёзно не рассматривало. Умерла в 2002 году.'},
+  {name:'Уильям Дж. Смит', init:'УС', role:'Ветеран ВМС, железнодорожник', tags:['open'], status:'open', statusText:'Не рассматривался ФБР', score:28, short:'Выдвинут в 2018 году армейским аналитиком Робертом Эдвардсом на основе анализа частиц на галстуке: Смит работал на Lehigh Valley Railroad, где использовали титан и редкоземельные элементы.', long:'Теория любопытна: Смит из Нью-Джерси, его школьный товарищ Айра Дэниел Купер погиб в войне; работа с металлоломом объясняла бы частицы. Но никаких связей с самолётами или парашютами не найдено, и ФБР уже закрыло дело.'},
+  {name:'Винс Петерсен', init:'ВП', role:'Металлург, Crucible Steel', tags:['open'], status:'open', statusText:'Версия 2023–2024 гг.', score:33, short:'Исследователь Эрик Улис в 2023 году назвал имя инженера из Питтсбурга, работавшего с титаном и редкоземельными сплавами, что совпадает с частицами на галстуке.', long:'Улис добивался через суд доступа к галстуку для повторного анализа ДНК, но ФБР отказало. Петерсен умер в 2002 году. Версия строится исключительно на металлургическом «отпечатке» и фотографическом сходстве; в самолёте или в парашютном спорте следов Петерсена нет.'}
+];
+
+const quiz = [
+  {q:'Под каким именем угонщик купил билет?', a:['Д. Б. Купер','Дэн Купер','Дональд Купер','Дэвид Купер'], c:1, e:'В билете значилось «Дэн Купер». Инициалы «Д. Б.» — ошибка журналиста, перепутавшего его с проверенным и отпущенным портлендцем.'},
+  {q:'Сколько парашютов потребовал Купер?', a:['Один','Два','Четыре','Шесть'], c:2, e:'Четыре: два основных и два запасных. ФБР решило, что он может взять заложника — поэтому не рискнуло подсунуть неисправные.'},
+  {q:'Какой напиток заказал Купер в полёте?', a:['Виски с содовой','Бурбон с содовой','Мартини','Пиво'], c:1, e:'Бурбон с содовой — и, по словам стюардессы, он за него заплатил и предложил ей оставить сдачу.'},
+  {q:'Почему для прыжка подошёл именно Boeing 727?', a:['У него самая низкая скорость','У него была задняя выдвижная лестница','У него не было давления в салоне','Пилоты не могли его заметить'], c:1, e:'Задний трап под хвостом — вне зоны двигателей. После серии подражаний Boeing установил «лопатку Купера», блокирующую трап в полёте.'},
+  {q:'Какую сумму нашёл мальчик на берегу Колумбии в 1980 году?', a:['$200 000','$58 000','$5 800','$580'], c:2, e:'5 800 долларов в трёх пачках — 290 купюр, все из списка выкупа. Брайан Инграм получил половину находки в 1986 году.'},
+  {q:'Что нашли на галстуке Купера при анализе 2017 года?', a:['Следы пороха','Частицы титана и редкоземельных металлов','Кровь','Споры грибов из Канады'], c:1, e:'Чистый титан, церий, сульфид лантана, стронций — набор, характерный для аэрокосмического или металлургического производства 1971 года.'},
+  {q:'Когда ФБР официально прекратило активное расследование?', a:['1980','1995','2008','2016'], c:3, e:'8 июля 2016 года, спустя почти 45 лет. Дело остаётся единственным нераскрытым угоном коммерческого самолёта в истории США.'}
+];
+
+const faq = [
+  {q:'Почему его зовут «Д. Б.», если он назвался Дэном?', a:'В первые часы после угона полиция Портленда проверила местного жителя с инициалами Д. Б. Купера и сразу исключила его. Репортёр информагентства перепутал имена, ошибка ушла в телеграфную ленту, и все СМИ её подхватили. Исправлять было уже поздно.'},
+  {q:'Почему ФБР уверено, что он погиб?', a:'Прыжок ночью, в дождь, при −7 °C и ветре около 300 км/ч в костюме, плаще и лоферах, без очков и шлема. Купер не мог видеть землю и не знал, где находится. Выбранный им запасной парашют, вероятно, был нерабочим учебным макетом. И главное — ни одна из 10 000 купюр так и не попала в оборот, хотя все номера были разосланы по банкам.'},
+  {q:'А почему многие считают, что он выжил?', a:'Он знал слишком много: режим полёта для безопасного прыжка, устройство трапа 727, что аэропорт Макхорд в 20 минутах от Сиэтла (это он сказал стюардессе). Тело, парашют, портфель и деньги за 50 лет не нашли в зоне, которую прочёсывали сотни солдат и агентов. А подражатель Маккой через пять месяцев повторил трюк и выжил.'},
+  {q:'Были ли подражатели?', a:'Да, около 15 только в 1972 году. Самый известный — Ричард Маккой (500 000 $, успешный прыжок, пойман через два дня). Волна «парашютных угонов» привела к установке «лопатки Купера» на все 727 и к введению досмотра пассажиров в аэропортах США с 1973 года.'},
+  {q:'Можно ли ещё раскрыть дело?', a:'Теоретически — да. На галстуке сохранилась частичная ДНК. В 2024 году ФБР, по сообщениям, приняло на экспертизу парашют, найденный детьми Ричарда Маккоя. Если найдётся основной парашют NB-6, портфель или новые купюры с совпадающими номерами, дело могут официально возобновить.'},
+  {q:'Что случилось с экипажем и самолётом?', a:'Пилот Уильям Скотт умер в 2001 году, стюардесса Тина Маклоу стала монахиней, затем вернулась к мирской жизни и десятилетиями отказывалась от интервью. Boeing 727 N467US летал ещё почти 25 лет — в том числе в авиакомпаниях Piedmont и Key Airlines — и был разобран на металлолом в 1996 году.'}
+];
+
+/* ========== HELPERS ========== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+/* years counter */
+(() => {
+  const start = new Date(1971,10,24);
+  const now = new Date();
+  let y = now.getFullYear() - 1971;
+  if (now < new Date(now.getFullYear(),10,24)) y--;
+  $('#yearsCounter').textContent = y;
+})();
+
+/* strip duplicate for seamless marquee */
+(() => { const t = $('#stripTrack'); t.innerHTML += t.innerHTML; })();
+
+/* ========== NAV ========== */
+const burger = $('#burger'), navLinks = $('#navLinks');
+burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.addEventListener('click', e => { if (e.target.tagName === 'A') navLinks.classList.remove('open'); });
+
+const toTop = $('#toTop');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+  $('#progress').style.width = p + '%';
+  toTop.classList.toggle('show', h.scrollTop > 600);
+  // active link
+  let cur = '';
+  $$('section[id]').forEach(s => { if (h.scrollTop >= s.offsetTop - 140) cur = s.id; });
+  $$('.nav-links a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, {passive:true});
+toTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ========== REVEAL + COUNTERS ========== */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('in');
+    en.target.querySelectorAll('[data-count]').forEach(el => {
+      if (el.dataset.done) return; el.dataset.done = 1;
+      const target = +el.dataset.count, dur = 1400, t0 = performance.now();
+      const step = now => {
+        const k = Math.min(1,(now-t0)/dur), v = Math.round(target * (1-Math.pow(1-k,3)));
+        el.textContent = v.toLocaleString('ru-RU');
+        if (k<1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+    en.target.querySelectorAll('.meter i').forEach(m => m.style.width = m.dataset.w + '%');
+    io.unobserve(en.target);
+  });
+},{threshold:.15});
+$$('.reveal').forEach(el => io.observe(el));
+
+/* ========== TIMELINE ========== */
+let tlIdx = 0;
+const tlList = $('#tlList'), tlPanel = $('#tlPanel');
+timeline.forEach((ev,i) => {
+  const li = document.createElement('li');
+  li.innerHTML = `<small>${ev.t}</small>${ev.title}`;
+  li.addEventListener('click', () => showTl(i));
+  tlList.appendChild(li);
+});
+function showTl(i){
+  tlIdx = (i + timeline.length) % timeline.length;
+  const ev = timeline[tlIdx];
+  $$('#tlList li').forEach((li,k) => li.classList.toggle('active', k===tlIdx));
+  const active = tlList.children[tlIdx];
+  if (window.innerWidth <= 960) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  tlPanel.innerHTML = `
+    <div class="tl-counter">${String(tlIdx+1).padStart(2,'0')}</div>
+    <div class="fade">
+      <div class="time">${ev.t}</div>
+      <h3>${ev.title}</h3>
+      <p>${ev.text}</p>
+      ${ev.quote ? `<div class="quote">«${ev.quote}»<small>— ${ev.who}</small></div>` : ''}
+      <div class="tl-nav">
+        <button data-dir="-1">← Назад</button>
+        <button data-dir="1">Далее →</button>
+      </div>
+    </div>`;
+  tlPanel.querySelectorAll('[data-dir]').forEach(b => b.addEventListener('click', () => showTl(tlIdx + +b.dataset.dir)));
+}
+showTl(0);
+document.addEventListener('keydown', e => {
+  if ($('#modal').classList.contains('open')) { if (e.key==='Escape') closeModal(); return; }
+  const r = $('#timeline').getBoundingClientRect();
+  if (r.top < window.innerHeight && r.bottom > 0) {
+    if (e.key==='ArrowRight') showTl(tlIdx+1);
+    if (e.key==='ArrowLeft') showTl(tlIdx-1);
+  }
+});
+
+/* ========== EVIDENCE + MODAL ========== */
+const evGrid = $('#evGrid');
+evidence.forEach((e,i) => {
+  const d = document.createElement('article');
+  d.className = 'ev';
+  d.innerHTML = `<div class="icon">${e.icon}</div><div class="tag">${e.tag}</div><h3>${e.title}</h3><p>${e.short}</p><span class="more">Подробнее →</span>`;
+  d.addEventListener('click', () => openModal(`<div class="tag">${e.tag}</div><h3>${e.title}</h3><p>${e.long}</p>`));
+  evGrid.appendChild(d);
+});
+const modal = $('#modal');
+function openModal(html){ $('#modalContent').innerHTML = html; modal.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+$('#modalClose').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+/* ========== SUSPECTS ========== */
+const susGrid = $('#susGrid');
+suspects.forEach(s => {
+  const d = document.createElement('article');
+  d.className = 'sus';
+  d.dataset.tags = s.tags.join(' ');
+  d.innerHTML = `
+    <div class="sus-top">
+      <div class="avatar">${s.init}</div>
+      <div><h3>${s.name}</h3><div class="role">${s.role}</div><span class="status ${s.status}">${s.statusText}</span></div>
+    </div>
+    <p>${s.short}</p>
+    <button class="toggle">Подробнее +</button>
+    <div class="sus-details">${s.long}</div>
+    <div class="meter"><i data-w="${s.score}"></i></div>
+    <div class="meter-l"><span>Индекс правдоподобия*</span><span>${s.score}/100</span></div>`;
+  d.querySelector('.toggle').addEventListener('click', e => {
+    d.classList.toggle('expanded');
+    e.target.textContent = d.classList.contains('expanded') ? 'Свернуть −' : 'Подробнее +';
+  });
+  susGrid.appendChild(d);
+});
+const note = document.createElement('p');
+note.className = 'mono'; note.style.cssText='font-size:.65rem;color:var(--muted);margin-top:20px;letter-spacing:.08em';
+note.textContent = '* Субъективная оценка авторов сайта на основе частоты упоминаний в расследованиях и наличия физических улик. Не является позицией ФБР.';
+susGrid.after(note);
+$('#filters').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  $$('#filters button').forEach(b => b.classList.toggle('active', b===e.target));
+  const f = e.target.dataset.f;
+  $$('.sus').forEach(c => c.classList.toggle('hidden', f!=='all' && !c.dataset.tags.split(' ').includes(f)));
+});
+
+/* ========== VOTE ========== */
+const VKEY = 'cooperVote', TKEY = 'cooperTotals';
+function getTotals(){ return JSON.parse(localStorage.getItem(TKEY) || '{"alive":1283,"dead":1047}'); }
+function renderVote(){
+  const t = getTotals(), sum = t.alive + t.dead, pa = Math.round(t.alive/sum*100);
+  $('#voteFill').style.width = pa + '%';
+  $('#voteAlive').textContent = `Выжил — ${pa}% (${t.alive.toLocaleString('ru-RU')})`;
+  $('#voteDead').textContent = `Погиб — ${100-pa}% (${t.dead.toLocaleString('ru-RU')})`;
+  const my = localStorage.getItem(VKEY);
+  $$('[data-vote]').forEach(b => {
+    b.classList.toggle('solid', b.dataset.vote === my);
+    b.textContent = b.dataset.vote === my ? '✓ Ваш голос' : (b.dataset.vote==='dead' ? 'Голосую: погиб' : 'Голосую: выжил');
+  });
+  if (my) $('#voteNote').textContent = 'Спасибо! Вы можете изменить решение — улики ведь ещё могут появиться.';
+}
+$$('[data-vote]').forEach(b => b.addEventListener('click', () => {
+  const t = getTotals(), prev = localStorage.getItem(VKEY), v = b.dataset.vote;
+  if (prev === v) return;
+  if (prev) t[prev]--;
+  t[v]++;
+  localStorage.setItem(TKEY, JSON.stringify(t));
+  localStorage.setItem(VKEY, v);
+  renderVote();
+}));
+renderVote();
+
+/* ========== MONEY CALC ========== */
+// approximate US CPI (annual average), 1971 = 40.5
+const cpi = {1971:40.5,1972:41.8,1973:44.4,1974:49.3,1975:53.8,1976:56.9,1977:60.6,1978:65.2,1979:72.6,1980:82.4,1981:90.9,1982:96.5,1983:99.6,1984:103.9,1985:107.6,1986:109.6,1987:113.6,1988:118.3,1989:124,1990:130.7,1991:136.2,1992:140.3,1993:144.5,1994:148.2,1995:152.4,1996:156.9,1997:160.5,1998:163,1999:166.6,2000:172.2,2001:177.1,2002:179.9,2003:184,2004:188.9,2005:195.3,2006:201.6,2007:207.3,2008:215.3,2009:214.5,2010:218.1,2011:224.9,2012:229.6,2013:233,2014:236.7,2015:237,2016:240,2017:245.1,2018:251.1,2019:255.7,2020:258.8,2021:271,2022:292.7,2023:304.7,2024:313.7,2025:322,2026:330};
+const range = $('#yearRange'), out = $('#moneyOut'), yl = $('#yearLabel');
+function calc(){
+  const y = +range.value, v = Math.round(200000 * cpi[y] / cpi[1971] / 1000) * 1000;
+  yl.textContent = y;
+  out.textContent = '≈ $' + v.toLocaleString('ru-RU').replace(/,/g,' ');
+}
+range.addEventListener('input', calc); calc();
+// rotating serial numbers
+setInterval(() => {
+  const n = Math.floor(10000000 + Math.random()*89999999).toString();
+  $('#serial').textContent = `L ${n.slice(0,2)} ${n.slice(2,5)} ${n.slice(5)} A`;
+}, 1800);
+
+/* ========== QUIZ ========== */
+let qi = 0, score = 0, answered = false;
+const qb = $('#quizBox');
+function renderQ(){
+  if (qi >= quiz.length) {
+    const verdict = score === quiz.length ? 'Вы могли бы вести дело NORJAK вместо Химмельсбаха.' : score >= 5 ? 'Отличный результат. Вы явно читали досье внимательно.' : score >= 3 ? 'Неплохо, но ФБР попросило бы перечитать материалы.' : 'Купер снова ушёл. Попробуйте ещё раз — ответы на этой странице.';
+    qb.innerHTML = `<div class="quiz-result"><div class="q-num">Результат</div><div class="score">${score}/${quiz.length}</div><p style="margin:14px 0 24px;font-size:1.1rem">${verdict}</p><button class="btn" style="border-color:var(--ink);color:var(--ink)" id="restartQ">Пройти заново</button></div>`;
+    $('#restartQ').addEventListener('click', () => { qi=0; score=0; renderQ(); });
+    return;
+  }
+  answered = false;
+  const q = quiz[qi];
+  qb.innerHTML = `
+    <div class="q-num">Вопрос ${qi+1} из ${quiz.length}</div>
+    <h3>${q.q}</h3>
+    <div class="opts">${q.a.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}</div>
+    <div class="explain" id="explain">${q.e}</div>
+    <div class="quiz-foot"><span>Счёт: ${score}</span><button id="nextQ" disabled>${qi===quiz.length-1?'Результат':'Следующий →'}</button></div>`;
+  qb.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
+    if (answered) return; answered = true;
+    const i = +b.dataset.i;
+    qb.querySelectorAll('.opt').forEach((o,k) => { o.disabled = true; if (k===q.c) o.classList.add('correct'); });
+    if (i === q.c) score++; else b.classList.add('wrong');
+    $('#explain').classList.add('show');
+    $('#nextQ').disabled = false;
+    qb.querySelector('.quiz-foot span').textContent = 'Счёт: ' + score;
+  }));
+  $('#nextQ').addEventListener('click', () => { qi++; renderQ(); });
+}
+renderQ();
+
+/* ========== FAQ ========== */
+const faqList = $('#faqList');
+faq.forEach(f => {
+  const d = document.createElement('div');
+  d.className = 'faq-item';
+  d.innerHTML = `<button class="faq-q">${f.q}</button><div class="faq-a"><p>${f.a}</p></div>`;
+  d.querySelector('.faq-q').addEventListener('click', () => {
+    const open = d.classList.contains('open');
+    $$('.faq-item').forEach(x => { x.classList.remove('open'); x.querySelector('.faq-a').style.maxHeight = null; });
+    if (!open) { d.classList.add('open'); const a = d.querySelector('.faq-a'); a.style.maxHeight = a.scrollHeight + 'px'; }
+  });
+  faqList.appendChild(d);
+});
+</script>
+</body>
+</html>
